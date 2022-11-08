@@ -24,9 +24,11 @@ function getRecipesFromStorage() {
   // A9. TODO - Complete the functionality as described in this function
   //           header. It is possible in only a single line, but should
   //           be no more than a few lines.
-  const item = localStorage.getItem('recipes')
-  return item
-
+  var recipeArray = [];
+  if (localStorage.getItem('recipes') !== null) {
+      recipeArray = JSON.parse(localStorage.getItem('recipes'));
+  }
+  return recipeArray;
   
 }
 
@@ -38,20 +40,17 @@ function getRecipesFromStorage() {
  * @param {Array<Object>} recipes An array of recipes
  */
 function addRecipesToDocument(recipes) {
-  // A10. TODO - Get a reference to the <main> element
-  let main=document.querySelector('main')
-  // A11. TODO - Loop through each of the recipes in the passed in array,
-  //            create a <recipe-card> element for each one, and populate
-  //            each <recipe-card> with that recipe data using element.data = ...
-  //            Append each element to <main>
-  let Arrrecipes = JSON.parse(recipes)
-  if (recipes != null) {
-    for (let i = 0; i < Arrrecipes.length; i++) {
-      let card = document.createElement('recipe-card')
-      card.data = Arrrecipes[i]
-      main.append(card)
-    }
-  }
+   // A10. TODO - Get a reference to the <main> element
+   const main = document.querySelector('main');
+   // A11. TODO - Loop through each of the recipes in the passed in array,
+   //            create a <recipe-card> element for each one, and populate
+   //            each <recipe-card> with that recipe data using element.data = ...
+   //            Append each element to <main>
+   for (let i = 0; i < recipes.length; i++) {
+       const recipeCard = document.createElement('recipe-card');
+       recipeCard.data = recipes[i];
+       main.append(recipeCard);
+   }
 }
 
 /**
@@ -65,7 +64,7 @@ function saveRecipesToStorage(recipes) {
   //            header. It is possible in only a single line, but should
   //            be no more than a few lines.
   const item = JSON.stringify(recipes)
-  localStorage.setItem(item)
+  localStorage.setItem('recipes' , item)
 }
 
 /**
@@ -103,7 +102,9 @@ function initFormHandler() {
      // B9. TODO - Get the recipes array from localStorage, add this new recipe to it, and
      //            then save the recipes array back to localStorage
     
-     const recipes = getRecipesFromStorage()
+    const recipes = getRecipesFromStorage()
+    console.log("This is what recipes prints")
+    console.log(recipes)
     recipes.push(recipeObj)
     saveRecipesToStorage(recipes);
      //localStorage.setItem('recipes', JSON.stringify(recipes))
@@ -123,9 +124,3 @@ function initFormHandler() {
     }
   }
   
-
-  
-  
-
-
-
